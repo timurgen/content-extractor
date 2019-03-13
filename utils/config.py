@@ -1,5 +1,6 @@
 """ Configuration properties defined here"""
 import os
+from utils import string_utils
 
 
 # Property name in entities in incoming data that contains url to file to be downloaded
@@ -13,4 +14,4 @@ UPLOAD_URL = os.environ.get('UPLOAD_URL')
 # application log level
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 # If request should fail and return when parsing or other error occurs
-FAIL_ON_ERROR = bool(os.environ.get("FAIL_ON_ERROR", "True"))
+FAIL_ON_ERROR = string_utils.str_to_bool(os.environ.get("FAIL_ON_ERROR", "True"))
