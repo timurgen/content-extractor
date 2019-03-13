@@ -10,7 +10,7 @@ import cherrypy
 import requests
 
 from flask import Flask, request, Response
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, InternalServerError
 from utils import logging, file_utils, exceptions, config
 from service import processor
 
@@ -71,10 +71,10 @@ def post_json_list():
             file_path = file_utils.download_file(res)
             parsed_file = processor.process_file(file_path)
 
-            if parsed_file["status"] == 200:
+            if parsed_file["status"] and parsed_file["status"] == 200:
                 LOGGER.info("Successfully parsed %s", file_name)
             else:
-                raise Exception("Parsed file status not ok: {}".format(parsed_file["status"]))
+                raise Exception("Parsed file status not ok: {}".format(parsed_file))
             if config.UPLOAD_URL:
                 LOGGER.debug("Starting upload file %s to %s", file_name, config.UPLOAD_URL)
                 file_like_obj = io.StringIO(parsed_file['content'])
@@ -86,6 +86,8 @@ def post_json_list():
             input_entity['parsed_data'] = parsed_file
         except Exception as exc:
             LOGGER.warning("Error occurred: %s", exc)
+            if config.FAIL_ON_ERROR:
+                raise InternalServerError(exc)
             input_entity['transfer_service'] = "ERROR: {}".format(str(exc))
         finally:
             if file_path:
