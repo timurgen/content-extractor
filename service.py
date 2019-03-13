@@ -74,10 +74,7 @@ def post_json_list():
             if parsed_file["status"] == 200:
                 LOGGER.info("Successfully parsed %s", file_name)
             else:
-                LOGGER.warning("Something went wrong, status: %s", parsed_file.status)
-                input_entity['transfer_service'] = "ERROR: {}".format(str(parsed_file.status))
-                continue
-
+                raise Exception("Parsed file status not ok: {}".format(parsed_file["status"]))
             if config.UPLOAD_URL:
                 LOGGER.debug("Starting upload file %s to %s", file_name, config.UPLOAD_URL)
                 file_like_obj = io.StringIO(parsed_file['content'])
