@@ -2,7 +2,6 @@
 import os
 from utils import string_utils
 
-
 # Property name in entities in incoming data that contains url to file to be downloaded
 FILE_URL = os.environ.get('FILE_URL', 'file_url')
 # property name in entities in incoming data that contains name  of file to be downloaded
@@ -15,3 +14,8 @@ UPLOAD_URL = os.environ.get('UPLOAD_URL')
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 # If request should fail and return when parsing or other error occurs
 FAIL_ON_ERROR = string_utils.str_to_bool(os.environ.get("FAIL_ON_ERROR", "True"))
+# Which OCR language to use may be eng, nor or eng+nor, note that you need Tika version 1.20+
+# to use multiple languages
+TESSERACT_OCR_LANG = os.environ.get("TESSERACT_OCR_LANG", "eng+nor")
+# if Tika will try to extract text from inline PDF images (more RAM and CPU consuming)
+PDF_EXTRACT_INLINE_IMG = string_utils.str_to_bool(os.environ.get("PDF_EXTRACT_INLINE_IMG", "True"))
