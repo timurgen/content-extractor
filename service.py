@@ -61,6 +61,7 @@ def post_json_list():
     for input_entity in input_data:
         file_url = input_entity[config.FILE_URL]
         file_name = input_entity[config.FILE_NAME]
+        local_path = input_entity.get('local_path')
 
         LOGGER.info("processing request for %s", file_name)
         file_path = None
@@ -76,10 +77,16 @@ def post_json_list():
             else:
                 raise Exception("Parsed file status not ok: {}".format(parsed_file))
             if config.UPLOAD_URL:
+                headers = {}
+                if local_path:
+                    headers["local_path"] = local_path
+
                 LOGGER.debug("Starting upload file %s to %s", file_name, config.UPLOAD_URL)
+
                 file_like_obj = io.StringIO(parsed_file['content'])
                 requests.post(config.UPLOAD_URL,
-                              files={file_name: (file_name + ".txt", file_like_obj)})
+                              files={file_name: (file_name + ".txt", file_like_obj)},
+                              headers=headers)
                 LOGGER.debug("File %s uploaded", file_path)
                 input_entity['transfer_service'] = "PARSED AND TRANSFERRED"
 
