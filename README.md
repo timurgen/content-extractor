@@ -9,9 +9,9 @@ To run it on local machine Python 3+, Java 8+, Tesseract and Norwegian language 
 
 ### configuration options: 
 
-All configuration options passes via environmental variables. 
-  TIKA_VERSION = 1.20 (required)
-  UPLOAD_URL - where to upload parsed data (only for post_json_list endpoint). All files will preserve their names with ".txt" added
-  FILE_URL - which data entity attribute contains url to file
-  FILE_NAME - which data entity attribute contains name of file
-  LOG_LEVEL - logging level
+All configuration options passes via environmental variables.   
+  *TIKA_VERSION = 1.20 (required)
+  *UPLOAD_URL - where to upload parsed data (only for post_json_list endpoint). All files will preserve their names with ".txt" added
+  *FILE_URL - which data entity attribute contains url to file
+  *FILE_NAME - which data entity attribute contains name of file
+  *LOG_LEVEL - logging level
