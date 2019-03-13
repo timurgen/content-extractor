@@ -2,6 +2,7 @@
 import os
 from utils import string_utils
 
+PORT = int(os.environ.get("PORT", 5000))
 # Property name in entities in incoming data that contains url to file to be downloaded
 FILE_URL = os.environ.get('FILE_URL', 'file_url')
 # property name in entities in incoming data that contains name  of file to be downloaded
