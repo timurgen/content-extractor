@@ -2,8 +2,8 @@
 
 Simple Apache Tike and Tesseract powered file content extractor service. Service runs on port 5000 and has two endpoints 
 
-post_file_list - consumes POST request with one or more files
-post_json_list - consumes POST request with JSON payload which contains URL's to files needed to be downloaded and parsed
+* post_file_list - consumes POST request with one or more files
+* post_json_list - consumes POST request with JSON payload which contains URL's to files needed to be downloaded and parsed
 
 To run it on local machine Python 3+, Java 8+, Tesseract and Norwegian language support for Tesseract needed. 
 
