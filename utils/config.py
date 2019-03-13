@@ -12,3 +12,5 @@ CHUNK_SIZE = os.environ.get('CHUNK_SIZE', 262144 * 4 * 10)
 UPLOAD_URL = os.environ.get('UPLOAD_URL')
 # application log level
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+# If request should fail and return when parsing or other error occurs
+FAIL_ON_ERROR = bool(os.environ.get("FAIL_ON_ERROR", "True"))
