@@ -40,7 +40,7 @@ def post_file_list():
             LOGGER.info("No file or file not allowed")
             raise BadRequest("No file or file not allowed")
 
-        with tempfile.NamedTemporaryFile(mode='r+b', delete=False) as temp_file_ptr:
+        with tempfile.NamedTemporaryFile(mode='r+b') as temp_file_ptr:
             temp_file_ptr.write(files[file].read())
             result.append(processor.process_file(temp_file_ptr.name))
 
