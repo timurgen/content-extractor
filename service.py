@@ -6,10 +6,12 @@ import os
 import io
 import json
 import tempfile
+
+from pathlib import Path
+
 import cherrypy
 import requests
 
-from pathlib import Path
 from flask import Flask, request, Response
 from werkzeug.exceptions import BadRequest, InternalServerError
 from utils import logging, file_utils, exceptions, config
@@ -87,7 +89,7 @@ def post_json_list():
                 file_like_obj = io.StringIO(parsed_file['content'])
 
                 if config.PRESERVE_FILE_TYPE:
-                    file_name + ".txt"
+                    file_name += ".txt"
                 else:
                     path = Path(file_name)
                     file_name = str(path.with_suffix('.txt'))
@@ -116,7 +118,7 @@ if __name__ == '__main__':
         'environment': 'production',
         'engine.autoreload_on': True,
         'log.screen': True,
-        'server.socket_port': 5000,
+        'server.socket_port': config.PORT,
         'server.socket_host': '0.0.0.0',
         'server.thread_pool': 10
     })
