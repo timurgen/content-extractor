@@ -20,3 +20,5 @@ TESSERACT_OCR_LANG = os.environ.get("TESSERACT_OCR_LANG", "eng+nor")
 # if Tika will try to extract text from inline PDF images (more RAM and CPU consuming)
 # must be in low cap string form true/false
 PDF_EXTRACT_INLINE_IMG = os.environ.get("PDF_EXTRACT_INLINE_IMG", "true")
+
+PRESERVE_FILE_TYPE = string_utils.str_to_bool(os.environ.get("PRESERVE_FILE_TYPE", "False"))

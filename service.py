@@ -9,6 +9,7 @@ import tempfile
 import cherrypy
 import requests
 
+from pathlib import Path
 from flask import Flask, request, Response
 from werkzeug.exceptions import BadRequest, InternalServerError
 from utils import logging, file_utils, exceptions, config
@@ -84,8 +85,14 @@ def post_json_list():
                 LOGGER.debug("Starting upload file %s to %s", file_name, config.UPLOAD_URL)
 
                 file_like_obj = io.StringIO(parsed_file['content'])
+
+                if config.PRESERVE_FILE_TYPE:
+                    file_name + ".txt"
+                else:
+                    path = Path(file_name)
+                    file_name = str(path.with_suffix('.txt'))
                 requests.post(config.UPLOAD_URL,
-                              files={file_name: (file_name + ".txt", file_like_obj)},
+                              files={file_name: (file_name, file_like_obj)},
                               headers=headers)
                 LOGGER.debug("File %s uploaded", file_path)
                 input_entity['transfer_service'] = "PARSED AND TRANSFERRED"
