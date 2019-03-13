@@ -85,9 +85,8 @@ def post_json_list():
                               files={file_name: (file_name + ".txt", file_like_obj)})
                 LOGGER.debug("File %s uploaded", file_path)
                 input_entity['transfer_service'] = "PARSED AND TRANSFERRED"
-            else:
-                input_entity['transfer_service'] = "PARSED"
-                input_entity['parsed_data'] = parsed_file
+
+            input_entity['parsed_data'] = parsed_file
         except Exception as exc:
             LOGGER.warning("Error occurred: %s", exc)
             input_entity['transfer_service'] = "ERROR: {}".format(str(exc))
