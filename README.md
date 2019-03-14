@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/timurgen/content-extractor.svg?branch=master)](https://travis-ci.org/timurgen/content-extractor)
+[![Build Status](https://travis-ci.org/sesam-community/content-extractor2.svg?branch=master)](https://travis-ci.org/sesam-community/content-extractor2)
 
 # content-extractor
 
