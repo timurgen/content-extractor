@@ -2,7 +2,7 @@
 
 # content-extractor
 
-Simple Apache Tike and Tesseract powered file content extractor service. Service runs on port 5000 and has two endpoints 
+Simple Apache Tika and Tesseract OCR powered file content extractor service. Service runs on port 5000 by default and has two endpoints:  
 
 * post_file_list - consumes POST request with one or more files
 * post_json_list - consumes POST request with JSON payload which contains URL's to files needed to be downloaded and parsed
