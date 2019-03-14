@@ -20,4 +20,4 @@ All configuration options passes via environmental variables.
 * FAIL_ON_ERROR - If need fail fast on parsing or other processing errors or not. True by default
 * TESSERACT_OCR_LANG - Language(s) to be used by tesseract OCR (need to be installed)
 * PDF_EXTRACT_INLINE_IMG instruct Tika to retrieve text from images in PDF file true/fals, true by default
-* PRESERVE_FILE_TYPE if resulted file name will carry inforamtion about original file type or not, False by default
+* PRESERVE_FILE_TYPE if resulted file name will carry information about original file type or not, False by default
