@@ -102,8 +102,8 @@ def post_json_list():
                               headers=headers)
                 LOGGER.debug("File %s uploaded", file_path)
                 input_entity['transfer_service'] = "PARSED AND TRANSFERRED"
-
-            input_entity['parsed_data'] = parsed_file
+            else:
+                input_entity['parsed_data'] = parsed_file
         except Exception as exc:
             LOGGER.warning("Error occurred: %s", exc)
             if config.FAIL_ON_ERROR:
