@@ -43,9 +43,13 @@ def post_file_list():
             LOGGER.info("No file or file not allowed")
             raise BadRequest("No file or file not allowed")
 
-        with tempfile.NamedTemporaryFile(mode='r+b') as temp_file_ptr:
+        with tempfile.NamedTemporaryFile(mode='r+b', delete=False) as temp_file_ptr:
             temp_file_ptr.write(files[file].read())
+            temp_file_ptr.flush()
+            os.fsync(temp_file_ptr)
+            temp_file_ptr.close()
             result.append(processor.process_file(temp_file_ptr.name))
+            os.remove(temp_file_ptr.name)
 
     return Response(
         json.dumps(result), mimetype='application/json')
