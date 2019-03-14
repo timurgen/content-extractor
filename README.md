@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/timurgen/content-extractor.svg?branch=master)](https://travis-ci.org/timurgen/content-extractor)
+
 # content-extractor
 
 Simple Apache Tike and Tesseract powered file content extractor service. Service runs on port 5000 and has two endpoints 
