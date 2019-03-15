@@ -124,7 +124,8 @@ if __name__ == '__main__':
         'log.screen': True,
         'server.socket_port': config.PORT,
         'server.socket_host': '0.0.0.0',
-        'server.thread_pool': 10
+        'server.thread_pool': 10,
+        'server.max_request_body_size': 0
     })
 
     cherrypy.engine.start()

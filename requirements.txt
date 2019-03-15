@@ -1,4 +1,4 @@
 flask==1.0.2
 CherryPy==18.1.0
-tika==1.19
+-e git://github.com/timurgen/tika-python#egg=tika
 requests==2.21.0
