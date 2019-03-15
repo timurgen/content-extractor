@@ -6,10 +6,12 @@ import os
 import io
 import json
 import tempfile
+
+from pathlib import Path
+
 import cherrypy
 import requests
 
-from pathlib import Path
 from flask import Flask, request, Response
 from werkzeug.exceptions import BadRequest, InternalServerError
 from utils import logging, file_utils, exceptions, config
@@ -41,9 +43,13 @@ def post_file_list():
             LOGGER.info("No file or file not allowed")
             raise BadRequest("No file or file not allowed")
 
-        with tempfile.NamedTemporaryFile(mode='r+b') as temp_file_ptr:
+        with tempfile.NamedTemporaryFile(mode='r+b', delete=False) as temp_file_ptr:
             temp_file_ptr.write(files[file].read())
+            temp_file_ptr.flush()
+            os.fsync(temp_file_ptr)
+            temp_file_ptr.close()
             result.append(processor.process_file(temp_file_ptr.name))
+            os.remove(temp_file_ptr.name)
 
     return Response(
         json.dumps(result), mimetype='application/json')
@@ -87,7 +93,7 @@ def post_json_list():
                 file_like_obj = io.StringIO(parsed_file['content'])
 
                 if config.PRESERVE_FILE_TYPE:
-                    file_name + ".txt"
+                    file_name += ".txt"
                 else:
                     path = Path(file_name)
                     file_name = str(path.with_suffix('.txt'))
@@ -96,8 +102,8 @@ def post_json_list():
                               headers=headers)
                 LOGGER.debug("File %s uploaded", file_path)
                 input_entity['transfer_service'] = "PARSED AND TRANSFERRED"
-
-            input_entity['parsed_data'] = parsed_file
+            else:
+                input_entity['parsed_data'] = parsed_file
         except Exception as exc:
             LOGGER.warning("Error occurred: %s", exc)
             if config.FAIL_ON_ERROR:
@@ -116,7 +122,7 @@ if __name__ == '__main__':
         'environment': 'production',
         'engine.autoreload_on': True,
         'log.screen': True,
-        'server.socket_port': 5000,
+        'server.socket_port': config.PORT,
         'server.socket_host': '0.0.0.0',
         'server.thread_pool': 10
     })
