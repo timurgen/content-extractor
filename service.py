@@ -70,6 +70,10 @@ def post_json_list():
         file_name = input_entity[config.FILE_NAME]
         local_path = input_entity.get('local_path')
 
+        if not file_utils.allowed_file(file_name):
+            LOGGER.warning("file %s not in allowed types", file_name)
+            continue
+
         LOGGER.info("processing request for %s", file_name)
         file_path = None
         try:
