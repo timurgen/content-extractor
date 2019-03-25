@@ -70,10 +70,6 @@ def post_json_list():
         file_name = input_entity[config.FILE_NAME]
         local_path = input_entity.get('local_path')
 
-        if not file_utils.allowed_file(file_name):
-            LOGGER.warning("file %s not in allowed types", file_name)
-            continue
-
         LOGGER.info("processing request for %s", file_name)
         file_path = None
         try:
@@ -94,7 +90,11 @@ def post_json_list():
 
                 LOGGER.debug("Starting upload file %s to %s", file_name, config.UPLOAD_URL)
 
-                file_like_obj = io.StringIO(parsed_file['content'])
+                if file_utils.allowed_file(file_name):
+                    file_like_obj = io.StringIO(parsed_file['content'])
+                else:
+                    LOGGER.warning("file %s not allowed, upload empty txt instead of it.")
+                    file_like_obj = io.StringIO()
 
                 if config.PRESERVE_FILE_TYPE:
                     file_name += ".txt"
