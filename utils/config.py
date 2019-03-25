@@ -25,3 +25,5 @@ PDF_EXTRACT_INLINE_IMG = os.environ.get("PDF_EXTRACT_INLINE_IMG", "true")
 # test.jpg -> test.jpg.txt
 # if false it will replace original extension with text
 PRESERVE_FILE_TYPE = string_utils.str_to_bool(os.environ.get("PRESERVE_FILE_TYPE", "False"))
+# string or tuple if multiple
+ALLOWED_FILE_TYPES = ".pdf"

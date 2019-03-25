@@ -7,13 +7,13 @@ from utils import logging, config
 LOGGER = logging.get_logger("file-utils", config.LOG_LEVEL)
 
 
-def allowed_file(file_name):
+def allowed_file(file_name: str) ->bool:
     """
-    return true if file  type is allowed (currently for all file types)
+    return true if file  type is allowed
     :param file_name:
-    :return:
+    :return: True if file extension is listed in config.ALLOWED_FILE_TYPES or False otherwise
     """
-    return True
+    return file_name.lower().endswith(config.ALLOWED_FILE_TYPES)
 
 
 def download_file(res):
