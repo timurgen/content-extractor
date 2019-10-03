@@ -7,7 +7,7 @@ from utils import logging, config
 LOGGER = logging.get_logger("file-utils", config.LOG_LEVEL)
 
 
-def allowed_file(file_name: str) ->bool:
+def allowed_file(file_name: str) -> bool:
     """
     return true if file  type is allowed
     :param file_name:

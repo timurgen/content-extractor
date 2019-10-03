@@ -38,8 +38,7 @@ def post_file_list():
     result = []
 
     for file in files:
-
-        if not files[file] or not file_utils.allowed_file(files[file]):
+        if not files[file] or not file_utils.allowed_file(files[file].filename):
             LOGGER.info("No file or file not allowed")
             raise BadRequest("No file or file not allowed")
 
@@ -101,6 +100,7 @@ def post_json_list():
                 else:
                     path = Path(file_name)
                     file_name = str(path.with_suffix('.txt'))
+
                 requests.post(config.UPLOAD_URL,
                               files={file_name: (file_name, file_like_obj)},
                               headers=headers)
