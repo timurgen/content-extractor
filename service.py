@@ -38,8 +38,7 @@ def post_file_list():
     result = []
 
     for file in files:
-
-        if not files[file] or not file_utils.allowed_file(files[file]):
+        if not files[file] or not file_utils.allowed_file(files[file].filename):
             LOGGER.info("No file or file not allowed")
             raise BadRequest("No file or file not allowed")
 
@@ -90,13 +89,18 @@ def post_json_list():
 
                 LOGGER.debug("Starting upload file %s to %s", file_name, config.UPLOAD_URL)
 
-                file_like_obj = io.StringIO(parsed_file['content'])
+                if file_utils.allowed_file(file_name):
+                    file_like_obj = io.StringIO(parsed_file['content'])
+                else:
+                    LOGGER.warning("file %s not allowed, upload empty txt instead of it.")
+                    file_like_obj = io.StringIO()
 
                 if config.PRESERVE_FILE_TYPE:
                     file_name += ".txt"
                 else:
                     path = Path(file_name)
                     file_name = str(path.with_suffix('.txt'))
+
                 requests.post(config.UPLOAD_URL,
                               files={file_name: (file_name, file_like_obj)},
                               headers=headers)
