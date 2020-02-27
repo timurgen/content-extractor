@@ -120,7 +120,24 @@ def post_json_list():
     return Response(json.dumps(input_data), content_type='application/json')
 
 
+def clean_temp_folder():
+    """
+    Clean temp dir from possible temp files leaved by PDFBox
+    """
+    import tempfile
+    temp_dir = tempfile.gettempdir()
+    entries = os.listdir(temp_dir)
+    for entry in entries:
+        if not entry.startswith('PDFBox'):
+            continue
+        try:
+            os.unlink(entry)
+        except Exception as e:
+            LOGGER.warn(f'couldn\'t unlink {entry} due to {e}')
+
+
 if __name__ == '__main__':
+    clean_temp_folder()
     cherrypy.tree.graft(APP, '/')
     cherrypy.config.update({
         'environment': 'production',
