@@ -1,4 +1,4 @@
-flask==1.0.2
-CherryPy==18.1.0
--e git://github.com/timurgen/tika-python#egg=tika
-requests==2.21.0
+flask==1.1.1
+CherryPy==18.5.0
+tika==1.23.1
+requests==2.23.0
